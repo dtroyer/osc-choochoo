@@ -13,3 +13,7 @@ plugin module and supported commands.
 demonstrates the effect on nearby rail transporation activity on
 developer productivity via OSC's extension mechanism.  It adds
 two commands: ``train list`` and ``train show``.
+
+Images taken from `ascii-art.de`_ and other sources.
+
+.. _`ascii-art.de`: http://www.ascii-art.de/ascii/t/train.txt

@@ -13,10 +13,17 @@
 
 """Plugin action implementation"""
 
+import io
 import logging
+import os
+from pkg_resources import resource_filename
 
 from cliff import lister
 from cliff import show
+from osc_lib import exceptions
+
+
+DATA_PATH = resource_filename('osc_choochoo.v1.train', 'data/')
 
 
 class TrainList(lister.Lister):
@@ -29,6 +36,11 @@ class TrainList(lister.Lister):
         self.log.debug("take_action(%s)" % parsed_args)
 
         data = []
+        # get list of files in DATA_PATH
+        for f in os.listdir(DATA_PATH):
+            if f.endswith(".txt"):
+                data.append([f.replace('.txt', '')])
+
         columns = ("Name", )
         return (columns, data)
 
@@ -51,17 +63,19 @@ class TrainShow(show.ShowOne):
     def take_action(self, parsed_args):
         self.log.debug('take_action(%s)' % parsed_args)
 
-        data = r"""
-                                                        \  /
-                  __                                     \/
-     _   ---===##===---_________________________--------------  _
-    [ ~~~=================###=###=###=###=###=================~~ ]
-    /  ||  | |~\  ;;;;     DEN    ;;;  SEP-2017  ;;;;  /~| |  ||  \
-   /___||__| |  \ ;;;;            [_]            ;;;; /  | |__||___\
-   [\        |__| ;;;;  ;;;; ;;;; ;;; ;;;; ;;;;  ;;;; |__|        /]
-  (=|    ____[-]_______________________________________[-]____    |=)
-  /  /___/|#(__)=o########o=(__)#||___|#(__)=o#########o=(__)#|\___\
- _________-=\__/=--=\__/=--=\__/=-_____-=\__/=--=\__/=--=\__/=-______
-"""
-
-        return (["1"], [data])
+        filename = os.path.join(DATA_PATH, parsed_args.name + '.txt')
+        try:
+            with io.open(filename) as f:
+                ascii_art = f.read()
+        except IOError as e:
+            msg = "Train %(train)s not found: %(exception)s"
+            raise exceptions.CommandError(
+                msg % {
+                    "train": parsed_args.name,
+                    "exception": e,
+                }
+            )
+        return (
+            ["name", "data"],
+            [parsed_args.name, ascii_art],
+        )
