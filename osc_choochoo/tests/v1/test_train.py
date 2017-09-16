@@ -17,18 +17,15 @@ import sys
 
 from osc_choochoo.tests import base
 from osc_choochoo.tests import fakes
-from osc_choochoo.v1 import plugin
+from osc_choochoo.v1 import train
 
 # Load the plugin init module for the plugin list and show commands
-import osc_choochoo.plugin
 plugin_name = 'osc_choochoo'
 plugin_client = 'osc_choochoo.plugin'
 
 
 class FakePluginV1Client(object):
     def __init__(self, **kwargs):
-        #self.servers = mock.Mock()
-        #self.servers.resource_class = fakes.FakeResource(None, {})
         self.auth_token = kwargs['token']
         self.management_url = kwargs['endpoint']
 
@@ -42,10 +39,6 @@ class TestPluginV1(base.TestCommand):
             token=fakes.AUTH_TOKEN,
         )
 
-        # Get a shortcut to the Service Catalog Mock
-        #self.catalog_mock = self.app.client_manager.identity.service_catalog
-        #self.catalog_mock.reset_mock()
-
 
 class TestPluginList(TestPluginV1):
 
@@ -57,7 +50,7 @@ class TestPluginList(TestPluginV1):
         ]
 
         # Get the command object to test
-        self.cmd = plugin.ListPlugin(self.app, None)
+        self.cmd = train.TrainList(self.app, None)
 
     def test_plugin_list(self):
         arglist = []
@@ -67,12 +60,10 @@ class TestPluginList(TestPluginV1):
         # DisplayCommandBase.take_action() returns two tuples
         columns, data = self.cmd.take_action(parsed_args)
 
-        collist = ('Name', 'Versions', 'Module')
+        collist = ('Name', )
         self.assertEqual(columns, collist)
         datalist = (
             plugin_name,
-            oscplugin.plugin.API_VERSIONS.keys(),
-            plugin_client,
         )
         for d in data:
             if d[0] == plugin_name:
@@ -89,7 +80,7 @@ class TestPluginShow(TestPluginV1):
         ]
 
         # Get the command object to test
-        self.cmd = plugin.ShowPlugin(self.app, None)
+        self.cmd = train.TrainShow(self.app, None)
 
     def test_plugin_show(self):
         arglist = [
@@ -103,11 +94,9 @@ class TestPluginShow(TestPluginV1):
         # DisplayCommandBase.take_action() returns two tuples
         columns, data = self.cmd.take_action(parsed_args)
 
-        collist = ('1', 'module', 'name')
-        self.assertEqual(columns, collist)
-        datalist = (
-            oscplugin.plugin.API_VERSIONS['1'],
-            plugin_client,
-            plugin_name,
-        )
-        self.assertEqual(data, datalist)
+        collist = ['1']
+        self.assertEqual(collist, columns)
+        # datalist = (
+        #     plugin_name,
+        # )
+        # self.assertEqual(datalist, data)

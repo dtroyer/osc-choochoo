@@ -14,15 +14,9 @@
 """Plugin action implementation"""
 
 import logging
-import six
-import sys
 
 from cliff import lister
 from cliff import show
-
-from openstackclient.common import clientmanager
-
-from osc_choochoo import exceptions
 
 
 class TrainList(lister.Lister):
