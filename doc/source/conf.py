@@ -15,7 +15,13 @@
 import os
 import sys
 
-sys.path.insert(0, os.path.abspath('../..'))
+import pbr.version
+
+# If extensions (or modules to document with autodoc) are in another directory,
+# add these directories to sys.path here. If the directory is relative to the
+# documentation root, use os.path.abspath to make it absolute, like shown here.
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+
 # -- General configuration ----------------------------------------------------
 
 # Add any Sphinx extension module names here, as strings. They can be
@@ -23,8 +29,15 @@ sys.path.insert(0, os.path.abspath('../..'))
 extensions = [
     'sphinx.ext.autodoc',
     #'sphinx.ext.intersphinx',
-    'oslo.sphinx'
+	'openstackdocstheme',
+	'stevedore.sphinxext',
+	'cliff.sphinxext',
 ]
+
+# openstackdocstheme options
+repository_name = 'dtroyer/osc-choochoo'
+bug_project = ''
+bug_tag = ''
 
 # autodoc generation is a bit aggressive and a nuisance when doing heavy
 # text edit cycles.
@@ -37,8 +50,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'osc-plugin'
-copyright = u'2013 Nebula Inc.'
+project = u'osc-choochoo'
+copyright = u'2017 Dean Troyer'
 
 # If true, '()' will be appended to :func: etc. cross-reference text.
 add_function_parentheses = True

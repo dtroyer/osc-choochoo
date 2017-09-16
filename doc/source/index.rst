@@ -10,6 +10,7 @@ Contents:
    :maxdepth: 2
 
    readme
+   cli/index
    installation
    usage
    contributing
