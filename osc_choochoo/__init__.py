@@ -16,4 +16,4 @@ import pbr.version
 
 
 __version__ = pbr.version.VersionInfo(
-    'osc_loco').version_string()
+    'osc_choochoo').version_string()
