@@ -21,8 +21,8 @@ from pkg_resources import resource_filename
 from cliff import command
 from cliff import lister
 from cliff import show
-from osc_lib import exceptions
 from openstackclient.i18n import _
+from osc_lib import exceptions
 
 
 DATA_PATH = resource_filename('osc_choochoo.v1.train', 'data/')
@@ -75,20 +75,7 @@ class TrainSet(command.Command):
 
     def take_action(self, parsed_args):
         self.log.debug('take_action(%s)' % parsed_args)
-
-        filename = os.path.join(DATA_PATH, parsed_args.name + '.txt')
-        try:
-            with io.open(filename) as f:
-                # Ha!  Nothing to do here, the whistle is always enabled!
-                pass
-        except IOError as e:
-            msg = "Train %(train)s not found: %(exception)s"
-            raise exceptions.CommandError(
-                msg % {
-                    "train": parsed_args.name,
-                    "exception": e,
-                }
-            )
+        # Ha!  Nothing to do here, the whistle is always enabled!
         return
 
 

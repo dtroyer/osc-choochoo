@@ -49,7 +49,7 @@ class TestTrainList(TestTrainV1):
         # Get the command object to test
         self.cmd = train.TrainList(self.app, None)
 
-    def test_plugin_list(self):
+    def test_train_list(self):
         arglist = []
         verifylist = []
         parsed_args = self.check_parser(self.cmd, arglist, verifylist)
@@ -67,15 +67,15 @@ class TestTrainList(TestTrainV1):
                 self.assertTrue(d[0] + '.txt' in datalist)
 
 
-class TestPluginShow(TestTrainV1):
+class TestTrainShow(TestTrainV1):
 
     def setUp(self):
-        super(TestPluginShow, self).setUp()
+        super(TestTrainShow, self).setUp()
 
         # Get the command object to test
         self.cmd = train.TrainShow(self.app, None)
 
-    def test_plugin_show(self):
+    def test_train_show(self):
         arglist = [
             plugin_name,
         ]

@@ -2,7 +2,7 @@
 osc-choochoo
 ============
 
-OpenStackClient reference transoprtation plugin module
+OpenStackClient reference transportation plugin module
 
 The OSC plugin system is designed so that the plugin need only be
 properly installed for OSC to find and use it.  It utilizes the
